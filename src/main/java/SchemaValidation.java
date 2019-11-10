@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.*;
 public class SchemaValidation {
 
     @Test
-    @DisplayName("4.1 Check if types of fields are correct and all required fields exist")
+    @DisplayName("2.1 Check if types of fields are correct and all required fields exist")
     public void testSchema() {
         for (int i = 0; i <= Setup.COUNTRY_CODES.length - 1; i++) {
             String requestBody = Setup.getRequestPayload(Setup.COUNTRY_CODES[i]);
@@ -23,7 +23,7 @@ public class SchemaValidation {
     }
 
     @Test
-    @DisplayName("4.2 Check the Country field of the Response")
+    @DisplayName("2.2 Check the Country field of the Response")
     public void testSchemaCountry() {
         RestAssured.defaultParser = Parser.JSON;
 
@@ -34,12 +34,12 @@ public class SchemaValidation {
                     .body(requestBody)
                     .when()
                     .post(Setup.BASE_URL)
-                    .then().body("user.address.country", equalTo(Setup.COUNTRY_CODES[i]));
+                    .then().body("user.country", equalTo(Setup.COUNTRY_CODES[i]));
         }
     }
 
     @Test
-    @DisplayName("4.3 Check 500-schema is correct")
+    @DisplayName("2.3 Validate json schema when incorrect headers")
     public void test500_Schema() {
             String requestBody = Setup.getRequestPayload(Setup.COUNTRY_CODES[1]);
             Response response = RestAssured.given()
