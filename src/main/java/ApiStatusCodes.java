@@ -26,7 +26,7 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("1.2. Checking status. Correct HTTP type. POST request. Incorrect country-codes")
+    @DisplayName("1.2. Checking status code. Correct HTTP type. POST request. Incorrect country-codes")
     public void testPostIncorrectCountryCodes()
     {
         for (int i = 0; i <= INCORRECT_COUNTRY_CODES.length-1; i++) {
@@ -42,7 +42,7 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("1.3. Checking status. Correct HTTP type. POST request. Empty body")
+    @DisplayName("1.3. Checking status code. Correct HTTP type. POST request. Empty body")
     public void testEmptyBody()
     {
             RestAssured.given()
@@ -54,7 +54,7 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("2.1 Checking status. Incorrect HTTP type. GET request")
+    @DisplayName("2.1 Checking status code. Incorrect HTTP type. GET request")
     public void testGet()
     {
         RestAssured.given()
@@ -88,6 +88,6 @@ public class ApiStatusCodes {
                 .when()
                 .post(Setup.BASE_URL)
                 .then()
-                .statusCode(500);
+                .statusCode(415);
     }
 }
