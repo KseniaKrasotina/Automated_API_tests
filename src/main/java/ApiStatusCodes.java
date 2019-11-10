@@ -54,7 +54,7 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("2.1 Checking status code. Incorrect HTTP type. GET request")
+    @DisplayName("1.4 Checking status code. Incorrect HTTP type. GET request")
     public void testGet()
     {
         RestAssured.given()
@@ -65,7 +65,7 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("3.1. Checking status. Correct HTTP type. POST request. Incorrect content-type")
+    @DisplayName("1.5. Checking status. Correct HTTP type. POST request. Incorrect content-type")
     public void testIncorrectContentType()
     {
         String requestBody = Setup.getRequestPayload(Setup.COUNTRY_CODES[0]);
@@ -79,12 +79,30 @@ public class ApiStatusCodes {
     }
 
     @Test
-    @DisplayName("3.2. Checking status. Correct HTTP type. POST request. Empty content-type")
+    @DisplayName("1.6. Checking status. Correct HTTP type. POST request. Empty content-type")
     public void testEmptyContentType()
     {
         String requestBody = Setup.getRequestPayload(Setup.COUNTRY_CODES[0]);
         RestAssured.given()
                 .body(requestBody)
+                .when()
+                .post(Setup.BASE_URL)
+                .then()
+                .statusCode(415);
+    }
+
+    @Test
+    @DisplayName("3.3. Verify response for heavy request payload")
+    public void testHeavyRequest()
+    {
+        String heavyPayload = "";
+        for (int i = 0; i < 1024*1024; i++)
+        {
+            heavyPayload += "A";
+        }
+
+        RestAssured.given()
+                .body(heavyPayload)
                 .when()
                 .post(Setup.BASE_URL)
                 .then()
